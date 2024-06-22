@@ -1,0 +1,34 @@
+<div class="main-container">
+    <nz-table
+      #basicTable
+      [nzData]="cofees"
+      [nzShowPagination]="basicTable.data && !isLoading"
+    >
+      <thead>
+        <tr>
+          
+          <th>Name</th>
+          <th>Price</th>
+          <th>Region</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="basicTable.data && !isLoading">
+        <tr *ngFor="let data of basicTable.data">
+          
+          <td>{{ data.name }}</td>
+          <td>{{ data.price }}</td>
+          <td>{{ data.region }}</td>
+          <td>
+            <a>Action 一 {{ data.first_name }}</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div *ngIf="isLoading" id="spinner">
+      <nz-spin [nzSize]="'large'" nzSimple></nz-spin>
+    </div>
+  
+    
+  </div>
+  

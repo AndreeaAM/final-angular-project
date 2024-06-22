@@ -1,12 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableComponent } from './table/table.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { TableRoutingModule } from './table-routing.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    TableComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    TableRoutingModule,
+    NzTableModule,
+    NzButtonModule,
+    NzIconModule,
+    NzFormModule,
+    NzInputModule,
+    NzNotificationModule,
+    NzSelectModule,
+    NzSpinModule
+    
   ]
 })
 export class TableModuleModule { }
