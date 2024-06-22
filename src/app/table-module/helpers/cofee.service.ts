@@ -11,9 +11,7 @@ export class CofeeService {
   constructor(private httpClient:HttpClient) {}
 
   getListOfCofees():Observable<any>{
-    return this.httpClient.get('https://fake-coffee-api.vercel.app/api')
-    
-    ;
+    return this.httpClient.get('https://fake-coffee-api.vercel.app/api');
   }
 
   UpdateCofee(cofee:any):Observable<any>{
