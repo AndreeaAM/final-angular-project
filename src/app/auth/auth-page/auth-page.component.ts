@@ -13,6 +13,7 @@ export class AuthPageComponent implements OnInit {
   password: string = '';
   rememberMe: boolean = false;
   userToken: string | null = '';
+  errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -21,37 +22,22 @@ export class AuthPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Check if there are stored credentials in localStorage
+    const storedEmail = localStorage.getItem('rememberedEmail');
+    const storedPassword = localStorage.getItem('rememberedPassword');
+
+    if (storedEmail && storedPassword) {
+      this.email = storedEmail;
+      this.password = storedPassword;
+      this.rememberMe = true; // Set rememberMe to true if credentials are stored
+    }
+
     this.userToken = sessionStorage.getItem('userToken');
   }
 
   onSubmit(): void {
     if (!this.email || !this.password) {
-      this.notificationService.error('Error', 'Please enter email and password');
-      return;
-    }
-
-    this.authService.login(this.email, this.password).subscribe(
-      (response: any) => {
-        console.log(response);
-        if (response.token) {
-          this.authService.setToken(response.token);
-          this.userToken = this.authService.getToken();
-          sessionStorage.setItem('userToken', response.token);
-          this.router.navigateByUrl('/table');
-        } else {
-          this.notificationService.error('Error', 'Invalid credentials');
-        }
-      },
-      (error: any) => {
-        console.error(error);
-        this.notificationService.error('Error', 'Something went wrong');
-      }
-    );
-  }
-
-  onRememberMeRequest(): void {
-    if (!this.email || !this.password) {
-      this.notificationService.error('Error', 'Please enter email and password');
+      this.errorMessage = 'Please enter email and password';
       return;
     }
 
@@ -63,19 +49,24 @@ export class AuthPageComponent implements OnInit {
           this.userToken = this.authService.getToken();
 
           if (this.rememberMe) {
-            localStorage.setItem('userToken', response.token);
+            // Store email and password in localStorage if rememberMe is checked
+            localStorage.setItem('rememberedEmail', this.email);
+            localStorage.setItem('rememberedPassword', this.password);
           } else {
-            sessionStorage.setItem('userToken', response.token);
+            // Clear stored credentials if rememberMe is not checked
+            localStorage.removeItem('rememberedEmail');
+            localStorage.removeItem('rememberedPassword');
           }
 
-          this.router.navigateByUrl('/dashboard');
+          sessionStorage.setItem('userToken', response.token);
+          this.router.navigateByUrl('/table');
         } else {
-          this.notificationService.error('Error', 'Invalid credentials');
+          this.errorMessage = 'Invalid credentials';
         }
       },
       (error: any) => {
         console.error(error);
-        this.notificationService.error('Error', 'Something went wrong');
+        this.errorMessage = 'Something went wrong';
       }
     );
   }
