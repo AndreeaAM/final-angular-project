@@ -21,16 +21,17 @@ export class EditTableComponent {
     image_url: '',
     weight: 0,
   };
-  @Output() close = new EventEmitter();
+  @Output() close = new EventEmitter<void>();
+  @Output() save = new EventEmitter<Cofee>();
 
-  cancel(){
+  Close(){
     console.log("Cancel");
     this.close.emit();
   }
 
-  save(){
+  Save(){
     console.log("Save");
-    this.close.emit();
+    this.save.emit(this.cofee);
   }
   
   }

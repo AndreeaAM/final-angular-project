@@ -18,6 +18,7 @@ export class TableComponent {
   constructor(private cofeeService: CofeeService, private router: Router) {}
 
   ngOnInit(){
+    
     this.getListOfCofees();
     };
 
@@ -36,6 +37,15 @@ export class TableComponent {
   }
   deleteCofee(name: string){
     console.log("Delete Cofee " + name);
+    this.cofeeService.DeleteCofee(this.cofees.find(coffee => coffee.name === name)).subscribe({
+      next: (res) => {
+        console.log("Cofee Deleted ");
+        this.getListOfCofees();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
     
   }
 
@@ -43,6 +53,20 @@ export class TableComponent {
     console.log("Edit Cofee" + name);
     this.cofeeToEdit = this.cofees.find(coffee => coffee.name === name);
     this.showEdit = true;
+  }
+
+  OnEditCofee(updatedcofee: Cofee ){
+    console.log("Save" + updatedcofee.price);
+    this.cofeeService.UpdateCofee(updatedcofee).subscribe({
+      next: (res) => {
+        console.log("Cofee Updated");
+        this.hideEditTable();
+      },
+      error: (err) => {
+        console.log(err);
+        this.hideEditTable();
+      }
+    });    
   }
 
   hideEditTable() {

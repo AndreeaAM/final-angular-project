@@ -41,6 +41,6 @@
   </div>
 
   <div class="edit-container" *ngIf="showEdit">
-    <app-edit-table [cofee]="cofeeToEdit" (close)="hideEditTable()"></app-edit-table>
+    <app-edit-table [cofee]="cofeeToEdit" (close)="hideEditTable()" (save)="OnEditCofee($event)" ></app-edit-table>
   </div>
   
