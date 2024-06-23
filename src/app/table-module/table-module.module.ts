@@ -13,6 +13,7 @@ import { TableRoutingModule } from './table-routing.module';
 import { EditTableComponent } from './edit-table/edit-table.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'; 
 
 
 
@@ -34,7 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzSelectModule,
     NzSpinModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzAutocompleteModule
    
     
   ]

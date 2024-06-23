@@ -5,6 +5,18 @@
       </button>
     </nz-button-group>
 
+    <div class="example-input">
+      <input
+        placeholder='Search Cofee by name'
+        nz-input
+        [(ngModel)]="inputValue"
+        (ngModelChange)="onChange($event)"
+        [nzAutocomplete]="auto"
+      />
+      <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+    </div>
+
+
     <nz-table
       #basicTable
       [nzData]="cofees"
