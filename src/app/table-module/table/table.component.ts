@@ -13,6 +13,7 @@ export class TableComponent {
   cofees: Cofee[] = [];
   cofeeToEdit: any = null;
 
+  isNew: boolean = false;
   isLoading : boolean = true;
   showEdit: boolean = false;
   constructor(private cofeeService: CofeeService, private router: Router) {}
@@ -55,6 +56,25 @@ export class TableComponent {
     this.showEdit = true;
   }
 
+  AddNewCofee(){
+    console.log("Add New Cofee");
+    this.cofeeToEdit = {
+      _id: this.cofees.length + 1,
+      id: this.cofees.length + 1,
+      name: '',
+      description: '',
+      region: '',
+      price: 0,
+      flavor_profile: [],
+      grind_option: [],
+      roast_level: 0,
+      image_url: '',
+      weight: 0,
+    };
+    this.isNew = true;
+    this.showEdit = true;
+  }
+
   OnEditCofee(updatedcofee: Cofee ){
     console.log("Save" + updatedcofee.price);
     this.cofeeService.UpdateCofee(updatedcofee).subscribe({
@@ -69,9 +89,23 @@ export class TableComponent {
     });    
   }
 
+  OnAddCofee(newcofee: Cofee){
+    this.cofeeService.AddCofee(newcofee).subscribe({
+      next: (res) => {
+        console.log("Cofee Added");
+        this.hideEditTable();
+      },
+      error: (err) => {
+        console.log(err);
+        this.hideEditTable();
+      }
+    });
+  }
+
   hideEditTable() {
     this.showEdit = false;
     this.cofeeToEdit = null;
+    this.isNew = false;
     console.log("Hide Edit Table");
   }
 

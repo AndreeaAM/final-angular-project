@@ -28,6 +28,6 @@ export class CofeeService {
   }
 
   AddCofee(cofee:any):Observable<any>{
-    return this.httpClient.post(`https://fake-coffee-api.vercel.app/docs`,cofee)
+    return this.httpClient.post(`https://fake-coffee-api.vercel.app/api`,JSON.stringify(cofee))
   } 
 }
