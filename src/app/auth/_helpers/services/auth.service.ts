@@ -42,4 +42,8 @@ export class AuthService {
   errorLogIn(payload: any): Observable<any> {
     return this.httpClient.post('https://reqres.in/api/login', payload);
   }
+
+  login(email: string, password: string): Observable<any> {
+    return this.httpClient.post('https://reqres.in/api/login', { email, password });
+  }
 }

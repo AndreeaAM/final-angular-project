@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { LogInPayload } from '../_helpers/interfaces/login.payload';
 import { AuthService } from '../_helpers/services/auth.service';
-
 
 @Component({
   selector: 'app-auth-page',
@@ -11,65 +9,74 @@ import { AuthService } from '../_helpers/services/auth.service';
   styleUrls: ['./auth-page.component.scss'],
 })
 export class AuthPageComponent implements OnInit {
+  email: string = '';
+  password: string = '';
   rememberMe: boolean = false;
   userToken: string | null = '';
 
-  constructor(private authService: AuthService, private router: Router, private notificationService: NzNotificationService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private notificationService: NzNotificationService
+  ) {}
 
   ngOnInit(): void {
-    this.userToken = this.authService.getToken();
+    this.userToken = sessionStorage.getItem('userToken');
   }
 
-  onSuccessRequest(): void {
-    const payload: LogInPayload = {
-      email: 'eve.holt@reqres.in',
-      password: 'cityslicka',
-    };
-    this.authService.successLogIn(payload).subscribe((response: { token: string; }) => {
-      console.log(response);
-      this.authService.setToken(response.token);
-      this.userToken = this.authService.getToken();
-      sessionStorage.setItem('userToken', response.token);
-      this.router.navigateByUrl('/table');
-    });
-  }
+  onSubmit(): void {
+    if (!this.email || !this.password) {
+      this.notificationService.error('Error', 'Please enter email and password');
+      return;
+    }
 
-  onErrorRequest(): void {
-    this.authService.errorLogIn({ email: 'peter@klaven' }).subscribe({
-      next: (response: any) => {
+    this.authService.login(this.email, this.password).subscribe(
+      (response: any) => {
         console.log(response);
+        if (response.token) {
+          this.authService.setToken(response.token);
+          this.userToken = this.authService.getToken();
+          sessionStorage.setItem('userToken', response.token);
+          this.router.navigateByUrl('/table');
+        } else {
+          this.notificationService.error('Error', 'Invalid credentials');
+        }
       },
-      error: (err: any) => {
-        console.error(err);
+      (error: any) => {
+        console.error(error);
         this.notificationService.error('Error', 'Something went wrong');
-        this.userToken = null;
-        this.authService.logOut();
-      },
-    });
+      }
+    );
   }
 
   onRememberMeRequest(): void {
-    const payload: LogInPayload = {
-      email: 'n',
-      password: 'cityslicka',
-    };
-    this.authService.successLogIn(payload).subscribe({
-      next: (response: { token: string; }) => {
+    if (!this.email || !this.password) {
+      this.notificationService.error('Error', 'Please enter email and password');
+      return;
+    }
+
+    this.authService.login(this.email, this.password).subscribe(
+      (response: any) => {
         console.log(response);
-        this.authService.setToken(response.token);
-        this.userToken = this.authService.getToken();
+        if (response.token) {
+          this.authService.setToken(response.token);
+          this.userToken = this.authService.getToken();
 
-        if (this.rememberMe) {
-          localStorage.setItem('userToken', response.token);
+          if (this.rememberMe) {
+            localStorage.setItem('userToken', response.token);
+          } else {
+            sessionStorage.setItem('userToken', response.token);
+          }
+
+          this.router.navigateByUrl('/dashboard');
         } else {
-          sessionStorage.setItem('userToken', response.token);
+          this.notificationService.error('Error', 'Invalid credentials');
         }
-
-        this.router.navigateByUrl('/table');
       },
-      error: (err: any) => {
-        console.error(err);
-      },
-    });
+      (error: any) => {
+        console.error(error);
+        this.notificationService.error('Error', 'Something went wrong');
+      }
+    );
   }
 }
