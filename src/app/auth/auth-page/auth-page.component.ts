@@ -66,7 +66,10 @@ export class AuthPageComponent implements OnInit {
       },
       (error: any) => {
         console.error(error);
-        this.errorMessage = 'Something went wrong';
+        this.errorMessage = 'Invalid credentials'; // Display error message for incorrect credentials
+        this.notificationService.error('Error', 'Something went wrong');
+        this.userToken = null;
+        this.authService.logOut();
       }
     );
   }
