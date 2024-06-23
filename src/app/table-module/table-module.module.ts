@@ -10,12 +10,15 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { TableRoutingModule } from './table-routing.module';
+import { EditTableComponent } from './edit-table/edit-table.component';
+import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    TableComponent
+    TableComponent,
+    EditTableComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { TableRoutingModule } from './table-routing.module';
     NzInputModule,
     NzNotificationModule,
     NzSelectModule,
-    NzSpinModule
+    NzSpinModule,
+    FormsModule
     
   ]
 })

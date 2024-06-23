@@ -1,0 +1,23 @@
+<div>
+    <h2>Edit Coffee</h2>
+    <form>
+      <label>
+        Name:
+        <input [(ngModel)]="cofee.name" name="name"/>
+      </label>
+      <label>
+        Description:
+        <input [(ngModel)]="cofee.description"   name="description" />
+      </label>
+      <label>
+        Region:
+        <input [(ngModel)]="cofee.region" name="region" />
+      </label>
+      <label>
+        Price:
+        <input  [(ngModel)]="cofee.price" name="price" type="number"/>
+      </label>
+      <button type="button" (click)="save()">Save</button>
+      
+    </form>
+  </div>
