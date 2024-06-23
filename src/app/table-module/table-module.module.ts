@@ -12,6 +12,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { TableRoutingModule } from './table-routing.module';
 import { EditTableComponent } from './edit-table/edit-table.component';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -31,7 +33,9 @@ import { FormsModule } from '@angular/forms';
     NzNotificationModule,
     NzSelectModule,
     NzSpinModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
+   
     
   ]
 })

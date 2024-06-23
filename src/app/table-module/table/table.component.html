@@ -1,4 +1,10 @@
 <div class="main-container" *ngIf="!showEdit">
+    <nz-button-group>
+      <button nz-button class="buttons" nzType="default" (click)="AddNewCofee()" >
+        Add new Cofee
+      </button>
+    </nz-button-group>
+
     <nz-table
       #basicTable
       [nzData]="cofees"
@@ -41,6 +47,6 @@
   </div>
 
   <div class="edit-container" *ngIf="showEdit">
-    <app-edit-table [cofee]="cofeeToEdit" (close)="hideEditTable()" (save)="OnEditCofee($event)" ></app-edit-table>
+    <app-edit-table [cofee]="cofeeToEdit" [isNew]="isNew" (close)="hideEditTable()" (add)="OnAddCofee($event)" (save)="OnEditCofee($event)" ></app-edit-table>
   </div>
   
