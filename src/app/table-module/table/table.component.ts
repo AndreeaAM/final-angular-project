@@ -16,6 +16,10 @@ export class TableComponent {
   isNew: boolean = false;
   isLoading : boolean = true;
   showEdit: boolean = false;
+  inputValue?: string;
+  filteredOptions: string[] = [];
+  options: string[] = [];
+  
   constructor(private cofeeService: CofeeService, private router: Router) {}
 
   ngOnInit(){
@@ -29,12 +33,15 @@ export class TableComponent {
       next: (res) => {
         this.cofees = res;
         this.isLoading = false;
+        this.filteredOptions = this.cofees.map(coffee => coffee.name);
+        this.options = this.cofees.map(coffee => coffee.name); 
       },
       error: (err) => {
         console.log(err);
         this.isLoading = false;
       }
-    }); 
+    });
+    
   }
   deleteCofee(name: string){
     console.log("Delete Cofee " + name);
@@ -73,6 +80,10 @@ export class TableComponent {
     };
     this.isNew = true;
     this.showEdit = true;
+  }
+
+  onChange(value: string): void {
+    this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 
   OnEditCofee(updatedcofee: Cofee ){
