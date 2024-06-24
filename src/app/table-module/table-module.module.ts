@@ -14,6 +14,9 @@ import { EditTableComponent } from './edit-table/edit-table.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete'; 
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { CofeeInformationComponent } from './cofee-information/cofee-information.component';
+
 
 
 
@@ -21,7 +24,8 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 @NgModule({
   declarations: [
     TableComponent,
-    EditTableComponent
+    EditTableComponent,
+    CofeeInformationComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +40,8 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     NzSpinModule,
     FormsModule,
     ReactiveFormsModule,
-    NzAutocompleteModule
-   
+    NzAutocompleteModule,
+    NzModalModule,
     
   ]
 })

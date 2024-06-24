@@ -15,19 +15,20 @@ export class CofeeService {
     return this.httpClient.get('https://fake-coffee-api.vercel.app/api');
   }
 
-  UpdateCofee(cofee:any):Observable<any>{
-    console.log("Update Cofee "+ cofee.id);
+  UpdateCofee(cofee: Cofee):Observable<any>{
+    console.log("Update Cofee on service "+ cofee.id);
    
     return this.httpClient.put(`https://fake-coffee-api.vercel.app/api/${cofee.id}`,JSON.stringify(cofee))
   }
 
   DeleteCofee(cofee:any):Observable<any>{
-    console.log("Delete Cofee "+ cofee.id);
+    console.log("Delete Cofee on service "+ cofee.id);
     
     return this.httpClient.delete(`https://fake-coffee-api.vercel.app/api/${cofee.id}`)
   }
 
   AddCofee(cofee:any):Observable<any>{
+    console.log("Add Cofee on service " + cofee.name);
     return this.httpClient.post(`https://fake-coffee-api.vercel.app/api`,JSON.stringify(cofee))
   } 
 }

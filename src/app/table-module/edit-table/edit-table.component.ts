@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cofee } from '../helpers/models/cofee';
-import { LetterValidator } from '../helpers/cofee.forms';
+import { LetterValidator} from '../helpers/cofee.forms';
 
 @Component({
   selector: 'app-edit-table',
@@ -37,6 +37,8 @@ export class EditTableComponent implements OnInit {
 
   createCofeeForm(): void {
     this.cofeeForm = this.formBuilder.group({
+      id: [this.cofee.id],
+      _id: [this.cofee._id],
       name: [
         this.cofee.name,
         [
@@ -71,6 +73,12 @@ export class EditTableComponent implements OnInit {
           Validators.max(10000),
         ],
       ],
+
+      weight:[ this.cofee.weight,],
+      flavor_profile: [this.cofee.flavor_profile],
+      grind_option: [this.cofee.grind_option],
+      roast_level: [this.cofee.roast_level],
+      image_url: [this.cofee.image_url],
     });
   }
 
@@ -81,10 +89,10 @@ export class EditTableComponent implements OnInit {
 
   Save(): void {
     if (this.isNew) {
-      console.log('Add');
+      console.log('Add'+this.cofeeForm.value.name);
       this.add.emit(this.cofeeForm.value);
     } else {
-      console.log('Save');
+      console.log('Save'+this.cofeeForm.value.name);
       this.save.emit(this.cofeeForm.value);
     }
   }
