@@ -74,6 +74,9 @@
     <p *ngIf="cofeeForm.get('price')?.touched && cofeeForm.get('price')?.hasError('min')" class="error-message">
       Price cannot be negative
     </p>
+    <p *ngIf="cofeeForm.get('price')?.touched && cofeeForm.get('price')?.hasError('max')" class="error-message">
+      Price cannot be more than 1000
+    </p>
 
     <!-- Buttons -->
     <nz-form-item>

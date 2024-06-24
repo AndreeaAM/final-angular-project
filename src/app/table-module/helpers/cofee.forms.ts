@@ -9,11 +9,3 @@ export function LetterValidator(
     return reg.test(control.value) ? null : { invalidSymbols: true };
   }
   
-  export function DescriptionValidator(
-    control: AbstractControl
-  ): { [key: string]: any } | null {
-    if (!control.value) return null;
-  
-    const reg = new RegExp('^.{10,}$');
-    return reg.test(control.value) ? null : { invalidSymbols: true };
-  }

@@ -18,35 +18,39 @@
 
 
     <nz-table
-      #basicTable
+      #filterTable
       [nzData]="cofees"
-      [nzShowPagination]="basicTable.data && !isLoading"
+      [nzShowPagination]="filterTable.data && !isLoading"
+      
     >
-      <thead>
-        <tr>
+    <thead>
+      <tr>
+        <th
+          *ngFor="let column of listOfColumns"
+          [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn"
+          [nzSortDirections]="column.sortDirections"
+        >
+          {{ column.name }}
+        </th>
+      </tr>
+    </thead>
+      <tbody *ngIf="filterTable.data && !isLoading" >
+        <tr *ngFor="let data of filterTable.data" >
           
-          <th>Name</th>
-          <th>Description</th>
-          <th>Region</th>
-          <th>Price</th>
-          
-          <th></th>
-        </tr>
-      </thead>
-      <tbody *ngIf="basicTable.data && !isLoading">
-        <tr *ngFor="let data of basicTable.data">
-          
-          <td>{{ data.name }}</td>
-          <td>{{ data.description }}</td>
-          <td>{{ data.region }}</td>
-          <td>{{ data.price }}</td>
+          <td (click)="cofeeInformationModal(data.id)">
+            <img [src]="data.image_url" alt="Cofee" class="cofee-picture" />
+          <td (click)="cofeeInformationModal(data.id)">{{ data.name }}</td>
+          <td (click)="cofeeInformationModal(data.id)">{{ data.description }}</td>
+          <td (click)="cofeeInformationModal(data.id)">{{ data.region }}</td>
+          <td (click)="cofeeInformationModal(data.id)">{{ data.price }}</td>
           
           <td >
-            <div (click)="deleteCofee(data.name)" class="delete-cofee">
+            <div (click)="deleteCofee(data.id)" class="delete-cofee">
               <span nz-icon nzType="delete" nzTheme="fill"></span>
             </div>
 
-            <div (click)="editCofee(data.name)" class="edit-cofee">
+            <div (click)="editCofee(data.id)" class="edit-cofee">
               <span nz-icon nzType="edit" nzTheme="fill"></span>
             </div>
           </td>
@@ -61,4 +65,7 @@
   <div class="edit-container" *ngIf="showEdit">
     <app-edit-table [cofee]="cofeeToEdit" [isNew]="isNew" (close)="hideEditTable()" (add)="OnAddCofee($event)" (save)="OnEditCofee($event)" ></app-edit-table>
   </div>
+
+  <div class="cofee-information-container" *ngIf="isModalVisible">
+    <app-cofee-information [cofee]="cofeeToEdit" (close)="hideCofeeInformationModal()"></app-cofee-information>
   
