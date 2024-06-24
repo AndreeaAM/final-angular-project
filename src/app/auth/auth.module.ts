@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AuthPageComponent
+    AuthPageComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule, 

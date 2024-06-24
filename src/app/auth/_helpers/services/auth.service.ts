@@ -46,4 +46,8 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.httpClient.post('https://reqres.in/api/login', { email, password });
   }
+
+  register(user: any): Observable<any> {
+    return this.httpClient.post('https://reqres.in/api/register', user);
+  }
 }

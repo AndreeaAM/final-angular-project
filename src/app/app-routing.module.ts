@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from './auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       import('./table-module/table-module.module').then((m) => m.TableModuleModule),
     
   },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({

@@ -35,6 +35,10 @@ export class AuthPageComponent implements OnInit {
     this.userToken = sessionStorage.getItem('userToken');
   }
 
+  goToRegister(): void {
+    this.router.navigate(['/register']);
+  }
+
   onSubmit(): void {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter email and password';
