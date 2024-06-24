@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../_helpers/services/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { CustomValidators } from '../_helpers/validators/password.validator';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,7 @@ export class RegisterComponent {
       email: this.email,
       password: this.password
     };
-
+    
     this.authService.register(user).subscribe(
       (response) => {
         // Handle successful registration
@@ -44,7 +45,15 @@ export class RegisterComponent {
         console.error('Registration error', error);
         this.errorMessage = 'Registration failed. Please try again.';
         this.notificationService.error('Error', 'Something went wrong');
+        return;
       }
     );
+
+    const passwordError = CustomValidators.passwordValidator(this.password);
+    if (passwordError) {
+      this.errorMessage = passwordError;
+      this.notificationService.error('Error', 'Password must be at least 6 characters long');
+      return;
+    }
   }
 }

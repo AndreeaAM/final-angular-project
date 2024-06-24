@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { AuthService } from '../_helpers/services/auth.service';
+import { CustomValidators } from '../_helpers/validators/password.validator';
 
 @Component({
   selector: 'app-auth-page',
@@ -42,6 +43,14 @@ export class AuthPageComponent implements OnInit {
   onSubmit(): void {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter email and password';
+      this.notificationService.error('Error', 'Please enter email and password');
+      return;
+    }
+
+    const passwordError = CustomValidators.passwordValidator(this.password);
+    if (passwordError) {
+      this.errorMessage = passwordError;
+      this.notificationService.error('Error', 'Password must be at least 6 characters long');
       return;
     }
 
@@ -71,7 +80,7 @@ export class AuthPageComponent implements OnInit {
       (error: any) => {
         console.error(error);
         this.errorMessage = 'Invalid credentials'; // Display error message for incorrect credentials
-        this.notificationService.error('Error', 'Something went wrong');
+        this.notificationService.error('Error', 'Invalid credentials');
         this.userToken = null;
         this.authService.logOut();
       }
